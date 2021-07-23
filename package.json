@@ -1,0 +1,25 @@
+{
+  "name": "Zero_Two_Bot",
+  "version": "0.0.1",
+  "description": "Codigo fonte da Two",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": "14.x"
+  },
+  "repository": {
+    "url": "https://github.com/YouTubeests/Zero_Two.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "discord.js",
+    "bots",
+    "glitch"
+  ],
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "moment": "^2.29.1"
+  }
+}
