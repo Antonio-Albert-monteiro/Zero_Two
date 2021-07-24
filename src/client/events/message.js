@@ -1,24 +1,31 @@
-const Discord = require("discord.js");
+const Guild = require("../../database/Schemas/Guild");
+const User = require("../../database/Schemas/User");
+const logger = require("../../utils/logger");
 
 module.exports = (client, message) => {
   if (message.author.bot) return;
-  
-  const getMencion = (id) => new RegExp(`^<@!?${id}>( |)$`);
-  
-  let prefix;
-  prefix = "*";
-  
-  if (message.content.match(getMencion(client.user.id))) {
-    message.channel.send(`Olá ${message.author} o meu prefixo nesse servidor é **${prefix}**`);
-  }
-  
-  if (message.content.indexOf(prefix) !== 0) return;
-  const messageArgs = message.content.split(" ");
-  const cmd = messageArgs[0];
-  const args = messageArgs.slice(1);
-  const cmdFile = client.commands.get(cmd.slice(prefix.length)) || client.commands.get(client.aliases.get(cmd.slice(prefix.length)));
-  
-  if (cmdFile) {
-    return cmdFile.run(client, message, args);
-  }
+  // fazendo umas buscas pela database...
+  Guild.findOne({ _id: message.guild.id }, async (errServer, server) => {
+    User.findOne({ _id: message.author.id }, async (errUser, user) => {
+      if (errServer) return logger.error(`(EVENTO MESSAGE): ` + errServer);
+      if (errUser) return logger.error(`(EVENTO MESSAGE): ` + errUser);
+
+      // aqui que realmente começar o evento sksksk
+      const ifMentioned = id => message.content === `<@${client.user.id}>`;
+      const prefix = server.prefix;
+
+      if (ifMentioned)
+        return message.quote(
+          `Olá meu nome é ${client.user.username} é o meu prefixo nesse servidor é **${prefix}**`
+        );
+      
+      
+      if (message.content.startWith(prefix) === false) return;
+      const messageArray = message.split(" ");
+      const commandName = messageArray[0].slice(prefix.length);
+      const messageArguments = messageArray.slice(1);
+
+      
+    });
+  });
 };

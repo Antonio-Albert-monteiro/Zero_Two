@@ -4,8 +4,10 @@ const client = new Discord.Client();
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
-
-const modulos = ["Information"];
+/*
+const DataIndex = require("./src/database/index");
+DataIndex.start();
+const modulos = ["Information", "Economy"];
 const fs = require("fs");
 
 modulos.forEach(dir => {
@@ -29,7 +31,7 @@ fs.readdir("src/client/events", (err, files) => {
   files.forEach(f => {
     const event = require(`./src/client/events/${f}`);
     const eventName = f.split(".")[0];
-    
+
     client.on(eventName, event.bind(null, client));
     delete require(require.resolve(`./src/client/events/${f}`));
     logger.sucess(`(EVENTOS): evento ${eventName} foi carregado`);
@@ -38,7 +40,8 @@ fs.readdir("src/client/events", (err, files) => {
 
 Discord.Message.prototype.quote = async function(content, options) {
   const message_reference = {
-    message_id: (!!content && !options
+    message_id:
+      (!!content && !options
         ? typeof content === "object" && content.messageID
         : options && options.messageID) || this.id,
     message_channel: this.channel.id
@@ -57,6 +60,5 @@ Discord.Message.prototype.quote = async function(content, options) {
     files
   });
 };
-
-client.login(process.env.BotToken)
-  .then(() => console.log("index carregada"));
+*/
+client.login(process.env.BotToken).then(() => console.log("index carregada"));
